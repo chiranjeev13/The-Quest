@@ -41,8 +41,7 @@ contract pharmaceutical_management is ERC1155, Ownable {
     drugs["Crocin"] = 5;
   }
 
-  function addWholesaler() public onlyOwner {}
-
+  
   function mint(string memory _drugName, uint256 supply) public onlyOwner {
     require(drugs[_drugName] != 0, "drug doesn't exist");
     _mint(msg.sender, drugs[_drugName], supply, "");
