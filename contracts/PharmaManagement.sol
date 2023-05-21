@@ -15,18 +15,33 @@ contract pharmaceutical_management is ERC1155, Ownable {
     bool status; //active or not
   }
 
+  struct supply_proposals {
+    address requestBy;
+    string drugName;
+    uint256 amount;
+    uint256 status; //0-rejected or 1-accepted
+  }
+
   mapping(string => uint256) drugs;
   mapping(address => retailer_details) public Retailers;
   mapping(uint256 => address) retailer_id;
   mapping(address => bool) isRetailerRegistered;
 
-  constructor() ERC1155("https://token-cdn-domain/{id}.json") {
+  supply_proposals[] public Supply_proposals;
+
+  constructor()
+    ERC1155(
+      "https://bafybeicrwdy75gt3fmhdv5wgrdxkeznq3pbnskbzerx6rbxl2fzhyfygi4.ipfs.nftstorage.link/{id}.json"
+    )
+  {
     drugs["Benadryl"] = 1;
     drugs["Aleve"] = 2;
     drugs["Sudafed"] = 3;
     drugs["Sinarest"] = 4;
     drugs["Crocin"] = 5;
   }
+
+  function addWholesaler() public onlyOwner {}
 
   function mint(string memory _drugName, uint256 supply) public onlyOwner {
     require(drugs[_drugName] != 0, "drug doesn't exist");
@@ -87,5 +102,30 @@ contract pharmaceutical_management is ERC1155, Ownable {
     Retailers[retailer].status = true;
   }
 
-  function needMoreSupply
+  function needMoreSupply(string memory _drugName, uint256 amount) public {
+    require(Retailers[msg.sender].status == true, "Not a retailer");
+    Supply_proposals.push(supply_proposals(msg.sender, _drugName, amount, 2));
+  }
+
+  function acceptedProposal(uint256 id) public onlyOwner {
+    require(Supply_proposals[id].status == 2, "Decision already taken");
+    Supply_proposals[id].status = 1;
+    addDrug(Supply_proposals[id].drugName);
+    mint(Supply_proposals[id].drugName, Supply_proposals[id].amount);
+  }
+
+  function rejectedProposal(uint256 id) public onlyOwner {
+    require(Supply_proposals[id].status == 2, "Decision already taken");
+    Supply_proposals[id].status = 0;
+  }
+
+  function retailerToCustomer(
+    address _customer,
+    string memory _drugName,
+    uint256 amount
+  ) public {
+    require(Retailers[msg.sender].status == true, "Not a retailer");
+    require(balanceOf(msg.sender, drugs[_drugName]) > amount, "Not enough!!");
+    _safeTransferFrom(msg.sender, _customer, drugs[_drugName], amount, "");
+  }
 }
