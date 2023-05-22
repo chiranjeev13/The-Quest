@@ -1,7 +1,23 @@
 
 # Pharmaceutical Management Contract
 
-This smart contract is designed to facilitate the management of pharmaceutical supplies and retailers. It leverages the ERC1155 standard for handling tokenized assets and includes features such as drug minting, supply proposals, and transfers between retailers and customers. The contract is implemented in Solidity and utilizes the OpenZeppelin library for ERC1155 tokens.
+Project Description:
+
+The Pharmaceutical Management Contract is a smart contract designed to address the challenges faced in managing pharmaceutical supplies and retailers. It aims to provide transparency, traceability, and efficiency in the pharmaceutical supply chain. The contract enables the tokenization of pharmaceutical drugs using the ERC1155 standard, allowing for easy tracking and transfer of drug assets.
+
+The project addresses the following key problems in the pharmaceutical industry:
+
+1. **Supply Chain Management**: The contract streamlines the supply chain management process by digitizing pharmaceutical drugs as tokens. Each drug is assigned a unique token ID, enabling efficient tracking of drug inventory, transfers, and supply proposals.
+
+2. **Retailer Registration and Management**: The contract provides a mechanism for retailers to register their details and manage their status (active or not). Retailers can easily submit supply proposals for drugs they require, ensuring a seamless and transparent process.
+
+3. **Supply Proposal Handling**: Retailers can submit supply proposals when they need more supply of a particular drug. The contract captures the details of the proposal, such as the drug name, required amount, and the retailer's address. The contract owner can review and accept/reject the proposals, facilitating efficient decision-making and allocation of drug supplies.
+
+4. **Transparency and Trust**: By leveraging blockchain technology, the contract enhances transparency and trust in the pharmaceutical supply chain. The tokenized drugs and supply proposals are stored on the Ethereum blockchain, making the information immutable and auditable.
+
+5. **Efficient Drug Transfers**: The contract allows for the secure transfer of drugs between retailers and customers. Retailers can transfer drugs to customers, ensuring seamless and auditable transactions.
+
+By addressing these problems, the Pharmaceutical Management Contract aims to improve the overall efficiency, transparency, and trustworthiness of the pharmaceutical supply chain. It provides a reliable platform for managing drug inventory, facilitating supply proposals, and ensuring smooth transactions between retailers and customers.
 
 Deployed in Mumbai Testnet at `0x53cBC4A6Cad580CADa55484D311F18c103e2F371`
 
