@@ -2,8 +2,11 @@
 pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract pharmaceutical_management is ERC1155, Ownable {
+  using Strings for uint256;
+
   uint256 drugId = 5;
   uint256 _retailercount = 0;
 
@@ -22,16 +25,16 @@ contract pharmaceutical_management is ERC1155, Ownable {
     uint256 status; //0-rejected or 1-accepted
   }
 
-  mapping(string => uint256) drugs;
+  mapping(string => uint256) public drugs;
   mapping(address => retailer_details) public Retailers;
-  mapping(uint256 => address) retailer_id;
-  mapping(address => bool) isRetailerRegistered;
+  mapping(uint256 => address) public retailer_id;
+  mapping(address => bool) public isRetailerRegistered;
 
   supply_proposals[] public Supply_proposals;
 
   constructor()
     ERC1155(
-      "https://bafybeicrwdy75gt3fmhdv5wgrdxkeznq3pbnskbzerx6rbxl2fzhyfygi4.ipfs.nftstorage.link/{id}.json"
+      "https://bafybeicrwdy75gt3fmhdv5wgrdxkeznq3pbnskbzerx6rbxl2fzhyfygi4.ipfs.nftstorage.link/"
     )
   {
     drugs["Benadryl"] = 1;
@@ -41,7 +44,6 @@ contract pharmaceutical_management is ERC1155, Ownable {
     drugs["Crocin"] = 5;
   }
 
-  
   function mint(string memory _drugName, uint256 supply) public onlyOwner {
     require(drugs[_drugName] != 0, "drug doesn't exist");
     _mint(msg.sender, drugs[_drugName], supply, "");
@@ -54,6 +56,12 @@ contract pharmaceutical_management is ERC1155, Ownable {
 
   function updateUri(string memory newUri) public onlyOwner {
     _setURI(newUri);
+  }
+
+  function returnUri(string memory _drugName) public returns (string memory) {
+    return (
+      string(abi.encodePacked(uri(1), (drugs[_drugName]).toString(), ".json"))
+    );
   }
 
   function regRetailers(
