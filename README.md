@@ -123,7 +123,3 @@ For more detailed explanations and code snippets, please refer to the contract s
 ## License
 
 This contract is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
-
----
-
-Feel free to modify and enhance this README template to suit your specific needs.
